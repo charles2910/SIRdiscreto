@@ -12,7 +12,7 @@ S0 = N - I0 - R0
 # Taxa de contato efetivo, alfa, e taxa média de recuperação, gamma.
 alfa, gamma = 0.107, 1./14 
 # Valores de tempo para avaliar os compartimentos em dias.
-t = np.linspace(0, 320, 320)
+t = np.linspace(0, 160, 160)
 # O modelo SIR de equações diferenciais.
 def deriv(y, t, N, alfa, gamma):
     S, I, R = y
@@ -26,10 +26,10 @@ y0 = S0, I0, R0
 ret = odeint(deriv, y0, t, args=(N, alfa, gamma))
 S, I, R = ret.T
 # Modelo em tempo discreto do SIR
-Sd, Id, Rd = np.zeros(320), np.zeros(320), np.zeros(320)
+Sd, Id, Rd = np.zeros(160), np.zeros(160), np.zeros(160)
 Sd[0], Id[0], Rd[0] = S0, I0, R0
 
-for i in range(1,320):
+for i in range(1,160):
     Sd[i] = Sd[i - 1] - (alfa * Sd[i - 1] * Id[i - 1] / N)
     Id[i] = Id[i - 1] - gamma * Id[i - 1] + (alfa * Sd[i - 1] * Id[i - 1] / N)
     Rd[i] = Rd[i - 1] + (gamma * Id[i - 1])
